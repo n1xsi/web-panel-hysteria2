@@ -50,8 +50,8 @@ CLIENT_TEMPLATE_PATH = '/opt/hysteria-panel/client_template.yaml'
 DOMAIN = 'example.com'                           # Замените на ваш домен!
 ```
 
-### 5. (Опционально) Настройка шаблона клиента
-Вы можете отредактировать файл `client_template.yaml` под ваши нужды (добавить нужные правила маршрутизации / настройки обфускации).
+### 5. Настройка шаблона клиента
+Отредактируйте файл `client_template.yaml` под ваши нужды (добавить нужные правила маршрутизации / настройки обфускации). Замените строки `server: example.com` и `sni: example.com` (64 и 67 строки) на ваши данные.
 
 **Главное: В месте, где должен быть пароль пользователя, обязательно оставьте плейсхолдер {{ auth_str }}.**
 
@@ -89,3 +89,29 @@ sudo systemctl start hysteria-panel
 2. Введите логин и пароль, указанные в `app.py`
 3. Добавляете пользователей -> перезагружается служба `hysteria-server.service`
 
+
+## 📝 Требования к конфигу Hysteria2
+Скрипт ожидает, что в вашем `/etc/hysteria/config.yaml` используется метод авторизации `userpass`. Пример структуры:
+```yaml
+listen: 0.0.0.0:443
+
+acme:
+    type: http
+    domains:
+        - example.com
+    email: admin@example.com
+
+auth:
+    type: userpass
+    userpass:
+        User1: password123
+        User2: password456
+
+masquerade:
+    type: file
+    file:
+        dir: /var/www/masq
+    listenHTTP: :80
+    listenHTTPS: :443
+    forceHTTPS: true
+```
