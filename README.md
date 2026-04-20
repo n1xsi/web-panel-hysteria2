@@ -9,6 +9,19 @@
 *   🕒 **Отложенная перезагрузка:** Скрипт перезагружает службу `hysteria-server.service` с небольшой задержкой. Если вы сидите через свой же VPN, страница в браузере успеет обновиться до того, как VPN-соединение кратковременно разорвётся.
 *   🔐 **Безопасность**: Доступ к панели защищён через Basic Auth (логин/пароль).
 
+## 🏋🏻‍♀️ Какую рутину это оптимизирует
+Если у вас стоит базовый протокол **Hysteria2**, то скорее всего ваш путь выглядит так:
+1) Подключение к серверу через `ssh`;
+2) Генерирация и копирование ключа через `openssl rand -hex 16`;
+3) Открытие с конфига через `nano /etc/hysteria/config.yaml`;
+4) Запись в конец списка `userpass: ...` нового пользователя ("ИМЯ: СКОПИРОВАННЫЙ_КЛЮЧ");
+5) Сохранение файла и выход;
+6) Обновление службы `hysteria-server.service` через `systemctl restart hysteria-server.service`;
+7) Переход на [сайт генератора конфигов](https://hysteriaconfig.xyz/);
+8) Копирование ключа и файла и отсыл пользователю.
+
+С данной web-панелью вы просто заходите на сайт → вписываете имя конфига → копируете готовый конфиг.
+
 ## 🏗️ Как установить
 
 ### 1. Подготовка
@@ -114,4 +127,44 @@ masquerade:
     listenHTTP: :80
     listenHTTPS: :443
     forceHTTPS: true
+```
+
+## 🗑️ Удаление hysteria2 и панели
+Если вы хотите удалить Hysteria2 и панель, выполните следующие действия:
+
+### 1. Удаление Hysteria2
+Остановка и отключение службы:
+```bash
+sudo systemctl stop hysteria-server
+sudo systemctl disable hysteria-server
+```
+
+Удаление программного обеспечения:
+```bash
+sudo apt-get purge hysteria -y
+sudo rm /usr/local/bin/hysteria
+```
+
+Удаление директории с конфигурацияими:
+```bash
+sudo rm -rf /etc/hysteria/
+```
+
+### 2. Удаление веб-панели
+Остановка и отключение:
+```bash
+sudo systemctl stop hysteria-panel
+sudo systemctl disable hysteria-panel
+```
+
+Удаление службы из автозагрузки и самой директории с кодом:
+```bash
+sudo rm /etc/systemd/system/hysteria-panel.service
+sudo rm -rf /opt/hysteria-panel/
+```
+
+### 3. Финальная очистка
+Обновление конфигураций системных служб, чтобы сервер забыл про удалённые файлы:
+```bash
+sudo systemctl daemon-reload
 ```
