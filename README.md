@@ -1,4 +1,12 @@
-# ⚡ Hysteria2 Lightweight Web Panel
+<h1 align="center">
+    
+⚡ Hysteria2 Lightweight Web Panel
+
+[![Python](https://custom-icon-badges.demolab.com/badge/3.12+-ffbc00?style=for-the-badge&logo=pythonn&label=python&labelColor=303030)](#)
+[![Flask](https://img.shields.io/badge/3.1.3-ffbc00?style=for-the-badge&logo=flask&logoColor=3db4cd&label=flask&labelColor=303030)](#)
+[![ruamel.yaml](https://custom-icon-badges.demolab.com/badge/0.19.1-ffbc00?style=for-the-badge&logo=ruamel.yaml&logoColor=3db4cd&label=ruamel.yaml&labelColor=303030)](#)
+
+</h1>
 
 <p align="center">
     <img src="https://i.imgur.com/CjXrCyy.jpeg" width="50%">
@@ -173,3 +181,7 @@ sudo rm -rf /opt/hysteria-panel/
 ```bash
 sudo systemctl daemon-reload
 ```
+
+## 📄 Лицензия
+
+MIT License. Делайте с кодом что хотите.
